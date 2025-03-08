@@ -151,7 +151,7 @@ LEFT JOIN suppliers s ON p.supplier_id = s.id
 WHERE e.employee_id > 3 AND e.employee_id <= 10
 GROUP BY cat.name;
 
-4.5.,4.6. Фільтрація категорій, де середня кількість проданого товару > 21, та сортування за спаданням
+4.5. Фільтрація категорій, де середня кількість проданого товару > 21
 SELECT cat.name AS category, COUNT(*) AS total_rows, AVG(od.quantity) AS average_order_quantity
 FROM order_details od
 RIGHT JOIN orders o ON od.order_id = o.id
@@ -164,7 +164,21 @@ LEFT JOIN suppliers s ON p.supplier_id = s.id
 WHERE e.employee_id > 3 AND e.employee_id <= 10
 GROUP BY cat.name
 HAVING AVG(od.quantity) > 21
-ORDER BY total_rows DESC;  
+
+4.6. Фільтрація категорій, де середня кількість проданого товару > 21, та сортування за спаданням
+SELECT cat.name AS category, COUNT(*) AS total_rows, AVG(od.quantity) AS average_order_quantity
+FROM order_details od
+RIGHT JOIN orders o ON od.order_id = o.id
+LEFT JOIN customers c ON o.customer_id = c.id
+LEFT JOIN employees e ON o.employee_id = e.employee_id 
+LEFT JOIN shippers sh ON o.shipper_id = sh.id
+LEFT JOIN products p ON od.product_id = p.id
+LEFT JOIN categories cat ON p.category_id = cat.id
+LEFT JOIN suppliers s ON p.supplier_id = s.id
+WHERE e.employee_id > 3 AND e.employee_id <= 10
+GROUP BY cat.name
+HAVING AVG(od.quantity) > 21
+ORDER BY total_rows DESC; 
 
 4.7. Вибірка чотирьох рядків, пропускаючи перший запис
 SELECT cat.name AS category, COUNT(*) AS total_rows, AVG(od.quantity) AS average_order_quantity
